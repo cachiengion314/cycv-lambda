@@ -1,9 +1,10 @@
 import { Router } from "express";
 
 import books from "./books.route";
+import cycv from "./cycv.router";
 
 const router = Router();
 
-router.use("/books", books);
+router.use("/", cycv);
 
 export default router;

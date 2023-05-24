@@ -37,5 +37,4 @@ router.post(
   controller.addSaveFileToShowCase
 );
 
-// router.get(`/*`, controller.notfound);
-module.exports = router;
+export default router;
