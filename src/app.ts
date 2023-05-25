@@ -1,16 +1,18 @@
 import express from "express";
 import serverless from "serverless-http";
-
+import { connectDB } from "./database/connection";
 import routes from "./routes";
 
 const app = express();
 
 const cors = require("cors");
-
-// mongoose, cors
-
 app.use(cors());
-app.use(express.json());
+
+connectDB();
+
+// body parser
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "2mb" }));
 
 app.use("/", routes);
 

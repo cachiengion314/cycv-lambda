@@ -1,6 +1,9 @@
 import { Request, Response, Router } from "express";
+import {
+  saveFileShowCases,
+  saveFileShowcase
+} from "../../controller/controller";
 
-// const controller = require(`../../controller/controller`);
 // const authenticate = require(`../../services/authenticate`);
 // const { isAuth } = require(`../../middleware/isAuth`);
 
@@ -10,16 +13,8 @@ const router = Router();
 // router.post(`/auth/signup`, authenticate.createUser);
 
 // public api
-// router.get(
-//   `/api/get-specific-savefile-showcase`,
-//   controller.getSpecificSaveFileShowcase
-// );
-router.get(
-  `/api/get-all-savefile-showcase`,
-  async (req: Request, res: Response) => {
-    res.send("hello world from hoangnam");
-  }
-);
+router.get(`/api/get-specific-savefile-showcase`, saveFileShowcase);
+router.get(`/api/get-all-savefile-showcase`, saveFileShowCases);
 // router.get(`/api/get-comments`, controller.getComments);
 
 // router.post(`/api/add-comment`, isAuth, controller.addComment);
