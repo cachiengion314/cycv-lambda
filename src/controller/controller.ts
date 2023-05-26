@@ -124,34 +124,39 @@ export const saveFileShowcase = async (
 //
 // /api/get-all-savefile-showcase-of-user
 //
-export const getAllSaveFileShowCaseOfUser = (
+export const getAllSaveFileShowCaseOfUser = async (
   request: Request,
   response: Response
 ) => {
   // @ts-ignore
   const userId = request?.user?._id;
 
-  // cycShowCaseSaveFile
-  //   .find({
-  //     createdBy: userId
-  //   })
-  //   .populate({
-  //     path: "createdBy",
-  //     select: "email"
-  //   })
-  //   .exec(function (err: any, docs: any) {
-  //     if (!err) {
-  //       response.send({ docs, messenger: "successfully!" });
-  //       return;
-  //     }
-  //     if (err) {
-  //       console.log(`messenger`, err);
-  //       response.status(404).send({ messenger: "your info are so wrong!" });
-  //       return;
-  //     }
-  //     console.log(`Can't find anything`);
-  //     response.send({ messenger: "Can't find anything" });
-  //   });
+  const docs = await cycShowCaseSaveFile
+    .find({
+      createdBy: userId
+    })
+    .populate({
+      path: "createdBy",
+      select: "email"
+    });
+  // .exec(function (err: any, docs: any) {
+  //   if (!err) {
+  //     response.send({ docs, messenger: "successfully!" });
+  //     return;
+  //   }
+  //   if (err) {
+  //     console.log(`messenger`, err);
+  //     response.status(404).send({ messenger: "your info are so wrong!" });
+  //     return;
+  //   }
+  //   console.log(`Can't find anything`);
+  //   response.send({ messenger: "Can't find anything" });
+  // });
+  if (docs) {
+    response.send({ docs, messenger: "successfully!" });
+    return;
+  }
+  response.send({ messenger: "err!" });
 };
 //
 // /api/remove-savefile-showcase
@@ -261,14 +266,14 @@ export const addSaveFileToShowCase = async (
 //
 // /api/get-comments
 //
-export const getComments = (request: Request, response: Response) => {
+export const getComments = async (request: Request, response: Response) => {
   const { savefileId } = request.query;
   if (!savefileId) {
     response.send({ messenger: "savefileId is empty!" });
     return;
   }
 
-  comment
+  const docs = await comment
     .find({
       createdIn: savefileId
     })
@@ -285,6 +290,11 @@ export const getComments = (request: Request, response: Response) => {
   //   console.log(`getComment`, docs);
   //   response.send({ docs, messenger: "successfully!" });
   // });
+  if (docs) {
+    response.send({ docs, messenger: "successfully!" });
+    return;
+  }
+  response.send({ messenger: "err!" });
 };
 //
 // /api/remove-comment
@@ -303,12 +313,12 @@ export const removeComment = (request: Request, response: Response) => {
 //
 // /api/add-comment
 //
-export const addComment = (request: Request, response: Response) => {
+export const addComment = async (request: Request, response: Response) => {
   // @ts-ignore
   const id = request?.user?._id;
   const { content, createdIn } = request.body;
 
-  comment.create(
+  const doc = await comment.create(
     { content, createdIn, createdBy: id }
     // ,
     // function (err: any, doc: any) {
@@ -319,6 +329,11 @@ export const addComment = (request: Request, response: Response) => {
     //   response.send({ doc, messenger: "successfully!" });
     // }
   );
+  if (doc) {
+    response.send({ doc, messenger: "successfully!" });
+    return;
+  }
+  response.send({ messenger: "err!" });
 };
 //
 //
