@@ -246,7 +246,7 @@ export const addSaveFileToShowCase = async (
   const id = request?.user?._id;
   const { saveData } = request.body;
 
-  const res = await cycShowCaseSaveFile.create(
+  const doc = await cycShowCaseSaveFile.create(
     { saveData, createdBy: id }
     // ,
     // function (err: any, doc: any) {
@@ -257,8 +257,8 @@ export const addSaveFileToShowCase = async (
     //   response.send({ doc, messenger: "successfully!" });
     // }
   );
-  if (res) {
-    response.send({ messenger: "successfully!" });
+  if (doc) {
+    response.send({ doc, messenger: "successfully!" });
     return;
   }
   response.send({ messenger: "err!" });
