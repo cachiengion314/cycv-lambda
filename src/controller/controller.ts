@@ -36,7 +36,7 @@ export const saveFileShowCases = async (
               }
             },
             {
-              $sort: { createdAt: -1 }
+              $sort: { updatedAt: -1 }
             },
             {
               $skip: skip
