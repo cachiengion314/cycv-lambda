@@ -36,6 +36,9 @@ export const saveFileShowCases = async (
               }
             },
             {
+              $sort: { createdAt: -1 }
+            },
+            {
               $skip: skip
             },
             {
